@@ -1,0 +1,109 @@
+html, body{
+    background: darkslategray;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-weight: 400;
+}
+
+.container{
+    width: 300px;
+    height: 300px;
+}
+
+
+.navbar{
+    display: flex;
+    padding: 0 15px;
+    align-items: center;
+    justify-content: flex-end;
+    height: 13%;
+    background-color: transparent;
+}
+
+
+.navbar #add-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 800;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+
+.navbar #add-item:hover{
+    background-color: darkgray;
+}
+
+
+.tarefa{
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    background-color: #EDEDED;
+    height: 30%;
+    border-radius: 5px;
+}
+
+
+.tarefa .tarefa_titulo{
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 4px;
+    height: 25%;
+}
+
+.tarefa .tarefa_desc{
+    font-style: italic;
+    padding: 4px;
+    height: 50%;
+}
+
+.tarefa .actions{
+    height: 25%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 5px;
+}
+
+.tarefa .actions .button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    text-align: center;
+    background-color: gray;
+    cursor: pointer;
+    font-weight: 500;
+    color: #EDEDED;
+}
+
+.tarefa .actions .button:hover{
+    font-weight: 600;
+}
+
+.tarefa .actions .done-button,
+.tarefa .actions .remove-button{
+    height: 100%;
+}
+
+.tarefa .actions .done-button:hover{
+    background-color: green;
+}
+
+.tarefa .actions .remove-button:hover{
+    background-color: red;
+}
+
+
+.tarefa.concluida .tarefa_titulo,
+.tarefa.concluida .tarefa_desc {
+    text-decoration: line-through;
+}
