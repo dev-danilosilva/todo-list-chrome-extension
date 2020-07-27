@@ -221,8 +221,9 @@ class ToDoApp{
 
 }
 
+
 const app = new ToDoApp('app-root', '.tarefa');
 
-for(let i = 0; i < 4; ++i){
+for(let i = 0; i < 15; ++i){
     app.addTask(new Task(i, `Task ${ i } Title`, 'Task Description foo', true));
 }
