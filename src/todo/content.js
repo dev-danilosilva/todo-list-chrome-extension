@@ -211,7 +211,9 @@ class ToDoApp{
 
         tasks.forEach((el, k, parent) => {
             el.querySelector('.done-button').addEventListener('click', (ev) => {
-                this.removeTask(el.task.id);
+                this._todo[k].toggleStatus();
+                this._renderer.update(TodoListView.getTodoListView(this._todo));
+                this.bindEvents();
             });
         });
 
