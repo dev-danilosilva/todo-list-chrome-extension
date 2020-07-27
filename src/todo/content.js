@@ -113,7 +113,7 @@ class TaskView{
         });
 
         const title = UIBuilder.createElement('div', {
-            'class': 'tarefa_titulo'
+            'class': 'tarefa_titulo',
         });
 
         const desc = UIBuilder.createElement('div', {
@@ -174,17 +174,16 @@ class TodoListView{
             UIBuilder.appendChild(root, TaskView.getTaskView(task));
         }
 
-
         return root;
     }
 
 }
 
 class ToDoApp{
-    constructor() {
-        this._renderer = new UIRenderer(
-            document.getElementById('app-root')
-        );
+    constructor(rootElement, taskSelector) {
+        this._taskSelector = taskSelector;
+        this._rootElement = document.getElementById(rootElement);
+        this._renderer = new UIRenderer(this._rootElement);
         this._todo = new TodoList();
         this._renderer.render(TodoListView.getTodoListView(this._todo));
     }
@@ -192,28 +191,36 @@ class ToDoApp{
     addTask(task){
         this._todo.addTask(task.id, task.title, task.description, task.done);
         this._renderer.update(TodoListView.getTodoListView(this._todo));
+        this.bindEvents();
     }
 
     removeTask(taskId){
         this._todo.removeTask(taskId);
         this._renderer.update(TodoListView.getTodoListView(this._todo));
+        this.bindEvents();
+    }
+
+    bindEvents(){
+        const tasks = this._rootElement.querySelectorAll(this._taskSelector);
+
+        tasks.forEach((el, k, parent) => {
+            el.querySelector('.remove-button').addEventListener('click', (ev) => {
+                this.removeTask(el.task.id);
+            });
+        });
+
+        tasks.forEach((el, k, parent) => {
+            el.querySelector('.done-button').addEventListener('click', (ev) => {
+                this.removeTask(el.task.id);
+            });
+        });
+
     }
 
 }
 
-const td = new TodoList();
+const app = new ToDoApp('app-root', '.tarefa');
 
-const app = new ToDoApp();
-
-for(let i = 0; i < 6; ++i){
+for(let i = 0; i < 4; ++i){
     app.addTask(new Task(i, `Task ${ i } Title`, 'Task Description foo', true));
 }
-
-const tasks = document.querySelectorAll('.tarefa');
-
-// tasks.forEach((el, k, parent) => {
-//     el.querySelector('.remove-button').addEventListener('click', (ev) => {
-//         alert(`Deleting ${ el.task.id }`)
-//         app.removeTask(el.task.id);
-//     });
-// });
