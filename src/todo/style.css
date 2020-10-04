@@ -1,109 +1,101 @@
-html, body{
-    background: darkslategray;
+*{
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
-    font-weight: 400;
+    box-sizing: border-box;
 }
 
 .container{
-    width: 300px;
-    height: 300px;
+    min-height: 100vh;
+    width: 100%;
+    color: #f5f5f5;
+    font-family: 'Montserrat', cursive;
+    background: #de6161;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2657eb, #de6161);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2657eb, #de6161); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+header{
+    font-size: 1.5rem;
+}
 
-.navbar{
+header h1{
+    text-shadow: #ededed 0 0 30px;
+    font-weight: 200;
+}
+
+header, form{
     display: flex;
-    padding: 0 15px;
+    min-height: 20vh;
+    justify-content: center;
     align-items: center;
-    justify-content: flex-end;
-    height: 13%;
-    background-color: transparent;
 }
 
+form input, form button{
+    padding: .5rem 1rem;
+    font-size: 2rem;
+    border: none;
+    background: #fff;
+    outline: none;
+}
 
-.navbar #add-item{
+form button{
+    background-color: dodgerblue;
+    color: #f5f5f5;
+    cursor: pointer;
+}
+form button:hover{
+    opacity: .8;
+}
+
+.task-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
-    font-weight: 800;
-    font-size: 20px;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    border-radius: 50%;
 }
 
-
-.navbar #add-item:hover{
-    background-color: darkgray;
+.task-list{
+    min-width: 30%;
+    list-style: none;
 }
 
-
-.tarefa{
+.task{
     display: flex;
-    flex-direction: column;
-    margin: 5px;
-    background-color: #EDEDED;
-    height: 30%;
-    border-radius: 5px;
-}
-
-
-.tarefa .tarefa_titulo{
-    font-weight: 800;
-    text-transform: uppercase;
-    padding: 4px;
-    height: 25%;
-}
-
-.tarefa .tarefa_desc{
-    font-style: italic;
-    padding: 4px;
-    height: 50%;
-}
-
-.tarefa .actions{
-    height: 25%;
-    display: flex;
-    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-start;
-    border-radius: 5px;
+    margin: .5rem;
+    background: #f5f5f5;
+    color: #222222;
+    font-size: 1.5rem;
+    transition: .8s ease all;
 }
 
-.tarefa .actions .button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    text-align: center;
-    background-color: gray;
+.task li{
+    flex: 1;
+    padding: .5rem;
+}
+
+.complete-task-button, .delete-task-button{
+    color: #f5f5f5;
+    border: none;
+    outline: none;
+    padding: 1rem;
     cursor: pointer;
-    font-weight: 500;
-    color: #EDEDED;
+    font-size: 1rem;
 }
 
-.tarefa .actions .button:hover{
-    font-weight: 600;
+.complete-task-button:hover, .delete-task-button:hover{
+    opacity: .8;
 }
 
-.tarefa .actions .done-button,
-.tarefa .actions .remove-button{
-    height: 100%;
+.complete-task-button{
+    background: #008000;
 }
 
-.tarefa .actions .done-button:hover{
-    background-color: green;
+.delete-task-button{
+    background: #ff3c14;
 }
 
-.tarefa .actions .remove-button:hover{
-    background-color: red;
-}
-
-
-.tarefa.concluida .tarefa_titulo,
-.tarefa.concluida .tarefa_desc {
+.completed{
     text-decoration: line-through;
+    opacity: .5;
 }
