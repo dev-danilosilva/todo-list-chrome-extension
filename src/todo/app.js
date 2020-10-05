@@ -37,15 +37,26 @@ function insertIntoLocalStorageArray(key, value){
     return values;
 }
 
+function deleteFromLocalStorageArray(key, index){
+    let values = [];
+    if (localStorage.getItem(key)) values = JSON.parse(localStorage.getItem(key));
+    if (values) {
+        values.splice(index, 1);
+        localStorage.setItem(key, JSON.stringify(values));
+    }
+}
+
+
 // ----> Task List Functions
 function createNewTaskElement(
     taskText='',
     options={
+        uniqueId: undefined,
         deleteButtonClickEvent: (e, TaskEl) => console.log('Task Removed'),
         completeButtonClickEvent: (e, TaskEl) => console.log('Task Done')
     }
 ) {
-    const taskDiv = createElement('div', {'class': 'task'});
+    const taskDiv = createElement('div', {'class': 'task', taskId: options.uniqueId});
     const newTask = createElement('li', {'class': 'task-item'});
     const completeTaskButton = createElement('button', {'class': 'complete-task-button'});
     const deleteTaskButton = createElement('button', {'class': 'delete-task-button'});
@@ -73,41 +84,69 @@ function createNewTaskElement(
 }
 
 function deleteTask(e, taskEl){
+    updateTaskStatus(taskEl.getAttribute('taskid'), null ,localStorageKey);
     taskEl.remove();
 }
 
 function completeTask(e, taskEl){
     taskEl.classList.toggle('completed');
+    updateTaskStatus(taskEl.getAttribute('taskid'), taskEl.classList.contains('completed') ,localStorageKey);
 }
 
 function saveTask(task) {
     insertIntoLocalStorageArray(localStorageKey, task);
 }
 
+function updateTaskStatus(id, status, localStorageKey){
+    let values = [];
+    values = JSON.parse(localStorage.getItem(localStorageKey));
+    for (let i = 0; i < values.length; ++i){
+        if (values[i].id == parseInt(id)) {
+            if (status == null) values.splice(i, 1);
+            else values[i].done = status;
+            break;
+        }
+    }
+    localStorage.setItem(localStorageKey, JSON.stringify(values));
+    return values;
+}
+
+
 //----> DOM EVENT FUNCTIONS
 function addTask(e){
     e.preventDefault();
     const taskText = taskInput.value
+    const taskId = Date.now()
     if (taskText) {
         taskList.appendChild(createNewTaskElement(taskText, {
             deleteButtonClickEvent: deleteTask,
-            completeButtonClickEvent: completeTask
+            completeButtonClickEvent: completeTask,
+            uniqueId: taskId
         }));
-        saveTask(taskText);
+        saveTask({text: taskText, id: taskId, done: false});
         taskInput.value = '';
     }
 
 }
 
 function loadTasks(e){
-    let tasks = []
-    ls = localStorage.getItem(localStorageKey)
+    let tasks = [];
+    ls = localStorage.getItem(localStorageKey);
     if (ls) tasks = JSON.parse(ls);
 
-    tasks.forEach( (task) => taskList.appendChild(createNewTaskElement(task, {
-                                                        deleteButtonClickEvent: deleteTask,
-                                                        completeButtonClickEvent: completeTask
-                                                    })))
+    tasks.forEach( task => {
+        const el = createNewTaskElement(task.text, {
+            deleteButtonClickEvent: deleteTask,
+            completeButtonClickEvent: completeTask,
+            uniqueId: task.id
+        });
+
+        if (task.done) el.classList.add('completed')
+
+        taskList.appendChild(el);
+
+
+    } )
 }
 
 
